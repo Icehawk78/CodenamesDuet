@@ -1,0 +1,16 @@
+td {
+    width: 20px;
+    height: 20px;
+}
+
+.good {
+    background-color: chartreuse;
+}
+
+.neutral {
+    background-color: beige;
+}
+
+.bad {
+    background-color: darkslategray;
+}
