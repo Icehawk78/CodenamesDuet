@@ -24,7 +24,7 @@
     <body>
         <div class="container-fluid" ng-app="CodenamesDuet" ng-controller="BoardGenerator as vm">
             <div class="col-xs-12">&nbsp;</div>
-            <div class="col-xs-3">
+            <div class="col-xs-12 col-md-3">
                 <div class="panel panel-default">
                     <div class="panel-heading">Codenames: Duet</div>
                     <div class="panel-body">
@@ -50,7 +50,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xs-3" ng-if="vm.view_front">
+            <div class="col-xs-12 col-md-3" ng-if="vm.view_front">
                 <div class="panel panel-default">
                     <div class="panel-heading" data-toggle="collapse" href="#board_front" aria-controls="board_front">Red Board</div>
                     <div class="panel-body collapse in" id="board_front">
@@ -62,7 +62,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xs-3" ng-if="vm.view_back">
+            <div class="col-xs-12 col-md-3" ng-if="vm.view_back">
                 <div class="panel panel-default">
                     <div class="panel-heading" data-toggle="collapse" href="#board_back" aria-controls="board_back">Blue Board</div>
                     <div class="panel-body collapse in" id="board_back">
