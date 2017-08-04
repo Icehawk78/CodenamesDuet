@@ -67,8 +67,8 @@
                     <div class="panel-heading" data-toggle="collapse" href="#board_back" aria-controls="board_back">Blue Board</div>
                     <div class="panel-body collapse in" id="board_back">
                         <table class="panel-heading table">
-                            <tr ng-repeat="row in vm.board_back track by $index">
-                                <td ng-repeat="cell in row track by $index" class="{{cell.class}}">{{cell.display}}</td>
+                            <tr ng-repeat="row in vm.board_back | reverse track by $index">
+                                <td ng-repeat="cell in row | reverse track by $index" class="{{cell.class}}">{{cell.display}}</td>
                             </tr>
                         </table>
                     </div>

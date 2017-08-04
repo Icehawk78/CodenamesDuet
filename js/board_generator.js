@@ -27,7 +27,7 @@ function BoardGenerator() {
     var BAD_GOOD = 1;
     var GOOD_BAD = 1;
     var GOOD_GOOD = 3;
-    var GOOD_NEUTRAL = 6;
+    var GOOD_NEUTRAL = 5;
     var GOOD = {
         class: 'good',
         display: '✔'
@@ -61,4 +61,11 @@ function BoardGenerator() {
     }
 }
 
+function Reverse() {
+    return function(items) {
+        return items.slice().reverse();
+    };
+}
+
 app.controller('BoardGenerator', BoardGenerator);
+app.filter('reverse', Reverse);
