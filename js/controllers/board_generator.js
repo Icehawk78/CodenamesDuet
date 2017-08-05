@@ -59,6 +59,17 @@ function BoardGenerator($http) {
         fill_empty(vm.board_back, vm.board_front, GOOD_BAD, GOOD, BAD);
         fill_empty(vm.board_back, vm.board_front, GOOD_GOOD, GOOD, GOOD);
         fill_empty(vm.board_back, vm.board_front, GOOD_NEUTRAL, GOOD, NEUTRAL);
+
+        var words = _(vm.wordlists).chain().filter(function(v,k) {return vm.active_lists[k]}).flatten().value();
+        if (words.length > vm.row_count * vm.col_count) {
+            vm.words = _.times(vm.row_count * vm.col_count, function() {
+                var card_index = getRandomInt(0, words.length);
+                var card = words.splice(card_index, 1)[0];
+                var side = getRandomInt(0, card.length);
+                return card[side];
+            });
+            console.log(vm.words);
+        }
     }
 }
 
