@@ -49,7 +49,7 @@
                         </div>
                         <br />
                         <div class="btn-group" role="group">
-                            <button ng-repeat="(list, words) in vm.wordlists" class="btn btn-default {{vm.active_lists[list] ? 'active' : ''}}" ng-click="vm.active_lists[list] = !vm.active_lists[list]">{{list}}</button>
+                            <button ng-repeat="(list, words) in vm.wordlists" class="btn btn-default {{words.length == 0 ? 'disabled' : ''}} {{vm.active_lists[list] ? 'active' : ''}}" ng-click="vm.active_lists[list] = !vm.active_lists[list]">{{list}}</button>
                         </div>
                         <br />
                         <br />
@@ -82,7 +82,8 @@
                         <table class="panel-heading table">
                             <tr ng-repeat="row in vm.board_back | reverse track by $index">
                                 <td ng-repeat="cell in row | reverse track by $index" class="{{cell.class}}">
-                                    <div ng-bind-html="cell.display | rawHtml"></div>
+                                    <div ng-if="cell.word === null" ng-bind-html="cell.display | rawHtml"></div>
+                                    <span ng-if="cell.word">{{cell.word}}</span>
                                 </td>
                             </tr>
                         </table>

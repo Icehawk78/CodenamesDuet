@@ -51,8 +51,8 @@ function BoardGenerator($http) {
     };
 
     vm.build_board = function() {
-        vm.board_front = _.times(vm.row_count, function() {return _.times(vm.col_count, _.constant(_.cloneDeep(NEUTRAL)))});
-        vm.board_back = _.times(vm.row_count, function() {return _.times(vm.col_count, _.constant(_.cloneDeep(NEUTRAL)))});
+        vm.board_front = base_board(vm.row_count, vm.col_count, NEUTRAL);
+        vm.board_back = base_board(vm.row_count, vm.col_count, NEUTRAL);
         Math.seedrandom(md5(vm.seed_text));
         fill_empty(vm.board_front, vm.board_back, GOOD_FRONT, GOOD, NEUTRAL);
         fill_empty(vm.board_front, vm.board_back, BAD_FRONT, BAD, NEUTRAL);
@@ -74,13 +74,6 @@ function BoardGenerator($http) {
                     vm.board_back[x][y].word = _.cloneDeep(card[side]);
                 });
             });
-            // vm.words = _.times(vm.row_count * vm.col_count, function() {
-            //     var card_index = getRandomInt(0, words.length);
-            //     var card = words.splice(card_index, 1)[0];
-            //     var side = getRandomInt(0, card.length);
-            //     return card[side];
-            // });
-            // console.log(vm.words);
         }
     }
 }
@@ -89,6 +82,14 @@ function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+}
+
+function base_board(rows, cols, tile) {
+    return _.times(rows, function() {
+        return _.times(cols, function() {
+            return _.cloneDeep(tile);
+        });
+    });
 }
 
 function fill_empty(board, board_flip, tile_count, tile, flip_tile) {
