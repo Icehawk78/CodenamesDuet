@@ -67,7 +67,8 @@
                         <table class="panel-heading table">
                             <tr ng-repeat="row in vm.board_front track by $index">
                                 <td ng-repeat="cell in row track by $index" class="{{cell.class}}">
-                                    <div ng-bind-html="cell.display | rawHtml"></div>
+                                    <div ng-if="cell.word === null" ng-bind-html="cell.display | rawHtml"></div>
+                                    <span ng-if="cell.word">{{cell.word}}</span>
                                 </td>
                             </tr>
                         </table>
