@@ -13,15 +13,18 @@ function BoardGenerator($http) {
     var GOOD_NEUTRAL = 5;
     var GOOD = {
         class: 'success',
-        display: '<span class="glyphicon glyphicon-ok">&nbsp;</span>'//✔'
+        display: '<span class="glyphicon glyphicon-ok">&nbsp;</span>',//✔'
+        word: null
     };
     var NEUTRAL = {
         class: 'default',
-        display: '<span class="glyphicon glyphicon-minus">&nbsp;</span>' //'⛔'
+        display: '<span class="glyphicon glyphicon-minus">&nbsp;</span>', //'⛔'
+        word: null
     };
     var BAD = {
         class: 'danger',
-        display: '<i class="fa fa-bomb">&nbsp;</i>' //⚠'
+        display: '<i class="fa fa-bomb">&nbsp;</i>', //⚠'
+        word: null
     };
 
     vm.wordlists = {};
@@ -48,8 +51,8 @@ function BoardGenerator($http) {
     };
 
     vm.build_board = function() {
-        vm.board_front = _.times(vm.row_count, function() {return _.times(vm.col_count, _.constant(NEUTRAL))});
-        vm.board_back = _.times(vm.row_count, function() {return _.times(vm.col_count, _.constant(NEUTRAL))});
+        vm.board_front = _.times(vm.row_count, function() {return _.times(vm.col_count, _.constant(_.cloneDeep(NEUTRAL)))});
+        vm.board_back = _.times(vm.row_count, function() {return _.times(vm.col_count, _.constant(_.cloneDeep(NEUTRAL)))});
         Math.seedrandom(md5(vm.seed_text));
         fill_empty(vm.board_front, vm.board_back, GOOD_FRONT, GOOD, NEUTRAL);
         fill_empty(vm.board_front, vm.board_back, BAD_FRONT, BAD, NEUTRAL);
@@ -62,13 +65,22 @@ function BoardGenerator($http) {
 
         var words = _(vm.wordlists).chain().filter(function(v,k) {return vm.active_lists[k]}).flatten().value();
         if (words.length > vm.row_count * vm.col_count) {
-            vm.words = _.times(vm.row_count * vm.col_count, function() {
-                var card_index = getRandomInt(0, words.length);
-                var card = words.splice(card_index, 1)[0];
-                var side = getRandomInt(0, card.length);
-                return card[side];
+            _.times(vm.row_count, function(x) {
+                _.times(vm.col_count, function(y) {
+                    var card_index = getRandomInt(0, words.length);
+                    var card = words.splice(card_index, 1)[0];
+                    var side = getRandomInt(0, card.length);
+                    vm.board_front[x][y].word = _.cloneDeep(card[side]);
+                    vm.board_back[x][y].word = _.cloneDeep(card[side]);
+                });
             });
-            console.log(vm.words);
+            // vm.words = _.times(vm.row_count * vm.col_count, function() {
+            //     var card_index = getRandomInt(0, words.length);
+            //     var card = words.splice(card_index, 1)[0];
+            //     var side = getRandomInt(0, card.length);
+            //     return card[side];
+            // });
+            // console.log(vm.words);
         }
     }
 }
@@ -86,7 +98,7 @@ function fill_empty(board, board_flip, tile_count, tile, flip_tile) {
             var x = getRandomInt(0, board.length);
             var y = getRandomInt(0, board[0].length);
             if (board[x][y].class.indexOf('default') > -1 && board_flip[x][y].class == flip_tile.class) {
-                board[x][y] = tile;
+                board[x][y] = _.cloneDeep(tile);
                 empty_tile = true;
             }
         }
