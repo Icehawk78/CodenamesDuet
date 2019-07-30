@@ -64,7 +64,7 @@ function BoardGenerator($http) {
         fill_empty(vm.board_back, vm.board_front, GOOD_NEUTRAL, GOOD, NEUTRAL);
 
         var words = _(vm.wordlists).chain().filter(function(v,k) {return vm.active_lists[k]}).flatten().value();
-        if (words.length > vm.row_count * vm.col_count) {
+        if (words.length >= vm.row_count * vm.col_count) {
             _.times(vm.row_count, function(x) {
                 _.times(vm.col_count, function(y) {
                     var card_index = getRandomInt(0, words.length);
